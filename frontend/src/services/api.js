@@ -17,6 +17,7 @@ export const getProductById = async (id) => {
     return await response.json();
 };
 
+
 export const createProduct = async (product) => {
     const response = await fetch(`${API_URL}/products`, {
         method: 'POST',
