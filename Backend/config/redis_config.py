@@ -13,9 +13,10 @@ from dotenv import load_dotenv
 
 logger = logging.getLogger(__name__)
 
-# Load environment variables only if not in production
-# In production (like Render), environment variables are set directly.
-if os.getenv('APP_ENV') != 'production':
+# If running in a managed environment (like Render), REDIS_URL should already be set.
+# Only load .env if REDIS_URL is not found, which implies a local environment.
+if not os.getenv('REDIS_URL'):
+    logger.info("REDIS_URL not found in environment. Attempting to load from .env file for local development.")
     env_path = os.path.join(os.path.dirname(__file__), '../.env')
     load_dotenv(env_path)
 

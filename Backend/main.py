@@ -92,6 +92,21 @@ def create_fastapi_app() -> FastAPI:
         lifespan=lifespan
     )
 
+    # ✅ ROOT ENDPOINT - Health check para Render
+    @fastapi_app.get("/", tags=["Health"])
+    async def root():
+        """
+        Root endpoint - Health check for deployment platforms.
+        Returns API status and basic information.
+        """
+        return {
+            "status": "healthy",
+            "service": "E-commerce REST API",
+            "version": "1.0.0",
+            "docs": "/docs",
+            "redoc": "/redoc"
+        }
+
     # Global exception handler
     @fastapi_app.exception_handler(InstanceNotFoundError)
     async def instance_not_found_exception_handler(request, exc):
