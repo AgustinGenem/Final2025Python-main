@@ -152,6 +152,5 @@ def run_app(fastapi_app: FastAPI):
 
 
 if __name__ == "__main__":
-    create_tables()
     app = create_fastapi_app()
     run_app(app)
