@@ -19,9 +19,11 @@ from models.review import ReviewModel  # noqa
 # Get logger (logging is configured in main.py)
 logger = logging.getLogger(__name__)
 
-# Load environment variables
-env_path = os.path.join(os.path.dirname(__file__), '../.env')
-load_dotenv(env_path)
+# Load environment variables only if not in production
+# In production (like Render), environment variables are set directly.
+if os.getenv('APP_ENV') != 'production':
+    env_path = os.path.join(os.path.dirname(__file__), '../.env')
+    load_dotenv(env_path)
 
 # Database configuration with defaults
 DATABASE_URL_ENV = os.getenv('DATABASE_URL')
