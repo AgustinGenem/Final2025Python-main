@@ -1,4 +1,5 @@
-const API_URL = 'http://localhost:8000';
+// 👇 CAMBIA ESTA LÍNEA - Usa variable de entorno
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
 export const getProducts = async () => {
     const response = await fetch(`${API_URL}/products`);
@@ -221,7 +222,7 @@ export const deleteOrderDetail = async (id) => {
         method: 'DELETE',
     });
     if (!response.ok && response.status !== 204) {
-        throw new InactiveOrderError('Failed to delete order detail');
+        throw new Error('Failed to delete order detail');
     }
     return response;
 };
@@ -454,3 +455,6 @@ export const deleteBill = async (id) => {
     }
     return response;
 };
+
+// 🔍 Debug helper - Remove in production
+console.log('API_URL configured:', API_URL);
