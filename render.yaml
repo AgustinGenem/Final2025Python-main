@@ -22,9 +22,6 @@ services:
           property: connectionString
       - key: PYTHON_VERSION
         value: 3.11
-      - key: APP_ENV
-        value: production
-
   # Servicio 2: La Base de Datos PostgreSQL
   - type: pserv
     name: tienda-db
@@ -33,7 +30,6 @@ services:
     plan: free
     postgres:
       version: "14"
-
   # Servicio 3: La Caché de Redis
   - type: redis
     name: tienda-redis

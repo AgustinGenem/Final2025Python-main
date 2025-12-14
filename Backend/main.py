@@ -46,6 +46,17 @@ async def lifespan(app: FastAPI):
     Handles startup and shutdown events for the FastAPI application.
     """
     logger.info("🚀 Starting FastAPI E-commerce API...")
+
+    # Create database tables on startup
+    logger.info("📦 Creating database tables...")
+    try:
+        create_tables()
+        logger.info("✅ Database tables created successfully")
+    except Exception as e:
+        logger.error(f"❌ Error creating database tables: {e}")
+        # Optionally, you might want to prevent startup on DB error
+        # raise e 
+
     if check_redis_connection():
         logger.info("✅ Redis cache available")
     else:
