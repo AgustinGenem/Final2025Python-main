@@ -52,7 +52,22 @@ const Order = () => {
     const handleStatusChange = async (orderId, newStatus) => {
         if (!window.confirm(`Change status to "${OrderStatus[newStatus]}"?`)) return;
         try {
-            await updateOrder(orderId, { status: parseInt(newStatus, 10) });
+            // Get the current order to send all required fields
+            const currentOrder = orders.find(o => o.id_key === orderId);
+            if (!currentOrder) {
+                throw new Error('Order not found');
+            }
+
+            // Send complete order data with updated status
+            await updateOrder(orderId, {
+                date: currentOrder.date,
+                total: currentOrder.total,
+                delivery_method: currentOrder.delivery_method,
+                status: parseInt(newStatus, 10),
+                client_id: currentOrder.client_id,
+                bill_id: currentOrder.bill_id
+            });
+            
             fetchData();
             if (selectedOrder?.id_key === orderId) {
                 setSelectedOrder({ ...selectedOrder, status: parseInt(newStatus, 10) });
